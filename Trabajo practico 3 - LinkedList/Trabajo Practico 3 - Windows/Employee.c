@@ -140,7 +140,7 @@ int imprimirEmpleado(Employee* this)
 	int retorno = -1;
 	if(this != NULL)
 	{
-		printf("\nID:  %d  Nombre: %s  Horas: %d Salario: %d\n",this->id,this->nombre,this->horasTrabajadas,this->sueldo);
+		printf("%4d %-10.10s %-5.3d %-7.5d\n",this->id,this->nombre,this->horasTrabajadas,this->sueldo);
 		retorno = 0;
 	}
 	return retorno;
@@ -150,13 +150,15 @@ int imprimirEmpleados(LinkedList* pArrayListEmployee)
 	Employee* auxEmployee;
 	int i;
 	int retorno = -1;
-	printf("\n**************LISTA EMPLEADOS**************\n\n");
+	printf("\n*********LISTA EMPLEADOS***********\n\n");
+	printf("  ID NOMBRE     HS    SUELDO\n");
 	for(i = 0; i< ll_len(pArrayListEmployee);i++)
 	{
 		auxEmployee = (Employee*)ll_get(pArrayListEmployee,i);
 		if(auxEmployee != NULL)
 		{
-			printf("ID:  %d  Nombre: %s  Horas: %d Salario: %d\n",auxEmployee->id,auxEmployee->nombre,auxEmployee->horasTrabajadas,auxEmployee->sueldo);
+			imprimirEmpleado(auxEmployee);
+			//printf("ID:  %d  Nombre: %s  Horas: %d Salario: %d\n",auxEmployee->id,auxEmployee->nombre,auxEmployee->horasTrabajadas,auxEmployee->sueldo);
 			retorno = 0;
 		}
 	}
@@ -165,6 +167,7 @@ int imprimirEmpleados(LinkedList* pArrayListEmployee)
 
 int create_employee(LinkedList* pArrayListEmployee)
 {
+	setbuf(stdout,NULL);
 	int retorno = -1;
 	char auxNombre[128];
 	int auxHoras;
@@ -199,7 +202,6 @@ int edit_employee(LinkedList* pArrayListEmployee)
 {
 	int retorno = -1;
 	int auxId;
-	//int index;
 	int opcion;
 	char auxNombre[128];
 	int auxHoras;
@@ -271,7 +273,7 @@ int delete_employee(LinkedList* pArrayListEmployee)
 	int auxId;
 	char respuesta;
 	Employee* auxEmployee;
-	printf("\n**************MODIFICAR EMPLEADO**************\n");
+	printf("\n**************BAJA EMPLEADO**************\n");
 		if(!utn_getNumeroInt(&auxId,"\nIngrese el ID del empleado: ","\nError, intente de nuevo\n",1,3000,3)&&
 				auxId <=ll_len(pArrayListEmployee))
 		{

@@ -4,6 +4,7 @@
 #include "Employee.h"
 #include "parser.h"
 #include "utn_funciones.h"
+#include "reports.h"
 
 /** \brief Carga los datos de los empleados desde el archivo data.csv (modo texto).
  *
@@ -156,14 +157,41 @@ int controller_ListEmployee(LinkedList* pArrayListEmployee)
 
 /** \brief Ordenar empleados
  *
- * \param path char*
  * \param pArrayListEmployee LinkedList*
  * \return int
  *
  */
 int controller_sortEmployee(LinkedList* pArrayListEmployee)
 {
-    return 1;
+	int retorno = -1;
+	int optionMenu;
+	int optionOrder;
+	if(pArrayListEmployee != NULL)
+	{
+			menu_sort();
+			utn_getNumeroInt(&optionMenu,"\nOpcion:","\nError, reintente\n",1,4,3);
+			menu_sort_orden();
+			utn_getNumeroInt(&optionOrder,"\nOpcion:","\nError, reintente\n",0,1,3);
+			printf("\nPor favor espere. . .\n");
+			switch(optionMenu)
+			{
+			case 1:
+				ll_sort(pArrayListEmployee,employee_ordenarPorId,optionOrder);
+				break;
+			case 2:
+				ll_sort(pArrayListEmployee,employee_ordenarPorNombre,optionOrder);
+				break;
+			case 3:
+				ll_sort(pArrayListEmployee,employee_ordenarPorHorasTrabajadas,optionOrder);
+				break;
+			case 4:
+				ll_sort(pArrayListEmployee,employee_ordenarPorSueldo,optionOrder);
+				break;
+				retorno = 0;
+			}
+
+	}
+    return retorno;
 }
 
 /** \brief Guarda los datos de los empleados en el archivo data.csv (modo texto).
@@ -220,14 +248,11 @@ int controller_saveAsBinary(char* path , LinkedList* pArrayListEmployee)
 	{
 		pNewFile = fopen("newFileBinary.csv","w+b");
 		//rewind((FILE*)path);
-		rewind(pNewFile);
+		//rewind(pNewFile);
 		for(i = 0; i<ll_len(pArrayListEmployee); i++)
 		{
 			auxEmployee = (Employee*)ll_get(pArrayListEmployee,i);
-			/*empleado.id= auxEmployee->id;
-			strcpy(empleado.nombre,auxEmployee->nombre);
-			empleado.horasTrabajadas= auxEmployee->horasTrabajadas;
-			empleado.sueldo= auxEmployee->sueldo;*/
+
 			fwrite(auxEmployee,sizeof(Employee),1,pNewFile);
 			retorno =0;
 		}

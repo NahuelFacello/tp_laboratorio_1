@@ -58,24 +58,19 @@ int parser_EmployeeFromBinary(FILE* pFile , LinkedList* pArrayListEmployee)
 	Employee pEmpleado;
 	Employee* auxEmpleado;
 	int retorno = -1;
-	int endOf = 1;
-	int index = 0;
-	do{
-		if( index == 0)
-		{
-			fread(&pEmpleado,sizeof(Employee),1,pFile);
-			index++;
-		}
-		endOf = fread(&pEmpleado,sizeof(Employee),1,pFile);
-		//printf("End of file: %d",endOf);
-		if(endOf == 1)
-		{
+	int flag = 0;
+
+	if( flag == 0)
+	{
+		fread(&pEmpleado,sizeof(Employee),1,pFile);
+		flag++;
+	}
+
+	while(fread(&pEmpleado,sizeof(Employee),1,pFile))
+	{
 			auxEmpleado = employee_newParametrosBin(pEmpleado.id,pEmpleado.nombre,pEmpleado.horasTrabajadas,pEmpleado.sueldo);
 			ll_add(pArrayListEmployee,(Employee*)auxEmpleado);
-			index++;
 			retorno = 0;
-		}
-	}while(endOf != 0);
-
+	}
     return retorno;
 }

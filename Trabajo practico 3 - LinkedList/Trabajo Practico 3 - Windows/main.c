@@ -61,7 +61,7 @@ int main()
             		printf("\nNo se puede imprimir\n");
                  break;
             case 7:
-
+            	controller_sortEmployee(listaEmpleados);
                  break;
             case 8:
             	if(!controller_saveAsText("data.csv",listaEmpleados))
@@ -71,7 +71,7 @@ int main()
 
                  break;
             case 9:
-            	if(controller_saveAsBinary("data.csv",listaEmpleados))
+            	if(!controller_saveAsBinary("data.csv",listaEmpleados))
             		printf("\nGuardado con exito\n");
 				else
 					printf("\nError al guardar\n");
@@ -86,3 +86,5 @@ int main()
     }while(option != 10);
     return 0;
 }
+
+
